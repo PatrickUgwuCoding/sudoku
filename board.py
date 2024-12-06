@@ -59,6 +59,11 @@ class Board:
             difficulty -= 1
 
         return self.board
+    
+    def copy_board(self):
+        list = [row[:] for row in self.board ]
+        copy = Board(list)
+        return copy
 
 
 

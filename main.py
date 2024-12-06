@@ -1,10 +1,11 @@
 import board, pygame, solver
 
 sudoku = board.Board()
-# solved_sudoku = sudoku.copy()
-# solved_sudoku = solver.Solver(solved_sudoku)
-# solved_sudoku.solve()
-# print(solved_sudoku.board)
+sudoku_copy = sudoku.copy_board()
+solved_sudoku = solver.Solver(sudoku_copy)
+solved_sudoku.solve()
+print("sudoku", sudoku.board)
+print("solved sudoku", solved_sudoku.board)
 
 
 running = True
@@ -17,7 +18,6 @@ while running:
         
     sudoku.draw_grid()
     
-  
     for row in range(9):
       for col in range(9):
         if sudoku.board[row][col] == 0:
