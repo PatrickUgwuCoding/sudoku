@@ -1,4 +1,6 @@
 import pygame as p
+import random as rand
+import solver as s
 
 p.init()
 p.display.set_caption("Sudoku")
@@ -8,9 +10,12 @@ class Board:
     SCREEN_WIDTH = 600
     SCREEN_HEIGHT = 600
 
-    def __init__(self,board):
+    def __init__(self,board = None):
         self.screen = p.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.board = board
+        if board is None:
+            self.generate_board()
+        else:
+            self.board = board
 
     def draw_grid(self):
         # divide board into 9 cells
@@ -35,6 +40,25 @@ class Board:
         width = (col + 1) * self.SCREEN_WIDTH/9 - self.SCREEN_WIDTH/18 - number.get_size()[0]/2
         height = (row + 1) * self.SCREEN_HEIGHT/9 - self.SCREEN_HEIGHT/18 - number.get_size()[1]/2
         self.screen.blit(number, (width, height))
+
+    def generate_board(self):
+        self.board = [[0 for _ in range(9)] for _ in range(9)]
+        difficulty = 20
+        solver = s.Solver(self)
+
+        while difficulty > 0:
+            rand_row = rand.randint(0, 8)
+            rand_col = rand.randint(0, 8)
+            
+            while True:
+                rand_num = rand.randint(1, 9)
+                if solver.is_valid(rand_row, rand_col, rand_num):
+                    self.board[rand_row][rand_col] = rand_num
+                    break
+
+            difficulty -= 1
+
+        return self.board
 
 
 
