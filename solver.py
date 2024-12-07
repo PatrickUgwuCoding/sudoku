@@ -3,7 +3,6 @@ class Solver:
 
     def __init__(self,gameboard):
         self.board = gameboard.board
-        print(self.NUMBERS)
     
     def find_empty_square(self):
         for row in range(9):
