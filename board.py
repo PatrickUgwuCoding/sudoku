@@ -31,7 +31,7 @@ class Board:
             p.draw.rect(self.screen, "black", p.Rect((i*self.SCREEN_WIDTH/9) - (inner_cell_line_width / 2), 0, inner_cell_line_width, self.SCREEN_HEIGHT))
 
     def draw_number(self, row, col, num):
-        # set up number
+        # setup number
         number_size = round(self.SCREEN_HEIGHT/9)
         font = p.font.Font(None, number_size)
         number = font.render(str(num), True, (0, 0, 0)) 
@@ -40,6 +40,12 @@ class Board:
         width = (col + 1) * self.SCREEN_WIDTH/9 - self.SCREEN_WIDTH/18 - number.get_size()[0]/2
         height = (row + 1) * self.SCREEN_HEIGHT/9 - self.SCREEN_HEIGHT/18 - number.get_size()[1]/2
         self.screen.blit(number, (width, height))
+
+    def draw_input_square(self, x, y):
+        inner_cell_line_width = 5
+        new_x = (x // (self.SCREEN_WIDTH / 9))
+        new_y = (y // (self.SCREEN_HEIGHT / 9))
+        p.draw.rect(self.screen, "red", p.Rect(new_x*self.SCREEN_WIDTH/9, new_y*self.SCREEN_HEIGHT/9, self.SCREEN_WIDTH/9 + inner_cell_line_width / 2, self.SCREEN_HEIGHT/9))
 
     def generate_board(self):
         self.board = [[0 for _ in range(9)] for _ in range(9)]
