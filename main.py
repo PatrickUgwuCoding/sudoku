@@ -1,5 +1,6 @@
-import board, pygame, solver
+import board, pygame, solver, dbConnection
 
+database = dbConnection.MongoDB()
 sudoku = board.Board()
 
 # solved sudoku
@@ -13,6 +14,7 @@ while running:
     
     sudoku.screen.fill((80, 150, 100))
 
+    # event manager
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -30,12 +32,14 @@ while running:
               else:
                  mistakes += 1
                  print(mistakes)
-            
+
+    
+    # draw input square after first click        
     if x + y != 0:
       sudoku.draw_input_square(x, y)    
-      
-    sudoku.draw_grid()
     
+    # draw grid
+    sudoku.draw_grid()
     
     # draw sudoku board
     for row in range(9):
@@ -49,4 +53,5 @@ while running:
     # update screen
     pygame.display.flip()
 
+database.close()
 pygame.quit()

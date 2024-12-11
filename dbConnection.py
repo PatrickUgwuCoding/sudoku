@@ -30,21 +30,3 @@ class MongoDB:
     def close(self):
         self.client.close()
     
-
-
-
-# testing
-
-testdb = MongoDB()
-
-#testdb.add_user("TestUser", "password")
-#testdb.add_highscore("TestUser", 50)
-
-user = testdb.find_user("TestUser")
-high = testdb.get_highscores()
-
-print("User found?: ", user)
-for score in high:
-    print(score)
-
-testdb.close()
