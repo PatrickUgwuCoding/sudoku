@@ -1,6 +1,19 @@
 import board, pygame, solver, dbConnection
 
 database = dbConnection.MongoDB()
+
+# user authentication
+username = input("\nEnter your name: ")
+password = input("Enter your password: ")
+
+if not database.find_user(username, password):
+  database.add_user(username, password)
+  print("\nNew user created")
+
+print(f"\nHello {username}")
+
+
+
 sudoku = board.Board()
 
 # solved sudoku

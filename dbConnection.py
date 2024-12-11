@@ -15,9 +15,9 @@ class MongoDB:
         highscores_collection = self.db['highscores']
         highscores_collection.insert_one({"username": username, "score": score})
     
-    def find_user(self, username):
+    def find_user(self, username, password):
         users_collection = self.db['users']
-        if users_collection.find_one({"name" : username}) is not None:
+        if users_collection.find_one({"name" : username, "password": password}) is not None:
             return True
         else: 
             return False
