@@ -9,7 +9,7 @@ class MongoDB:
         highscores_collection = self.db['highscores']
         # find top 20 scores
         top_20 = highscores_collection.find().sort("score", -1).limit(20) # -1 for descending order
-        return top_20
+        return list(top_20)
     
     def add_highscore(self, username, score):
         highscores_collection = self.db['highscores']
