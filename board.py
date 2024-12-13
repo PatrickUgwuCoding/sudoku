@@ -10,12 +10,13 @@ class Board:
     SCREEN_WIDTH = 600
     SCREEN_HEIGHT = 600
 
-    def __init__(self,board = None):
+    def __init__(self):
         self.screen = p.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        if board is None:
-            self.generate_board()
-        else:
-            self.board = board
+        self.solver = s.Solver()
+        self.solver.solve()
+        self.board = self.copy_board()
+        self.generate_board()
+        
 
     def draw_grid(self):
         # divide board into 9 cells
@@ -48,28 +49,20 @@ class Board:
         p.draw.rect(self.screen, "red", p.Rect(new_x*self.SCREEN_WIDTH/9, new_y*self.SCREEN_HEIGHT/9, self.SCREEN_WIDTH/9 + inner_cell_line_width / 2, self.SCREEN_HEIGHT/9))
 
     def generate_board(self):
-        self.board = [[0 for _ in range(9)] for _ in range(9)]
-        difficulty = 20
-        solver = s.Solver(self)
+        difficulty = 10 # high number == low difficulty
 
         while difficulty > 0:
             rand_row = rand.randint(0, 8)
             rand_col = rand.randint(0, 8)
             
-            while True:
-                rand_num = rand.randint(1, 9)
-                if solver.is_valid(rand_row, rand_col, rand_num):
-                    self.board[rand_row][rand_col] = rand_num
-                    break
-
+            self.board[rand_row][rand_col] = 0
+                    
             difficulty -= 1
-
         return self.board
     
     def copy_board(self):
-        list = [row[:] for row in self.board ]
-        copy = Board(list)
-        return copy
+        list = [row[:] for row in self.solver.board ]
+        return list
 
 
 

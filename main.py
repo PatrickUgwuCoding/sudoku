@@ -1,11 +1,6 @@
-import board, pygame, solver
+import board, pygame
 
 sudoku = board.Board()
-
-# solved sudoku
-sudoku_copy = sudoku.copy_board()
-solved_sudoku = solver.Solver(sudoku_copy)
-solved_sudoku.solve()
 
 x, y, mistakes = 0, 0, 0
 running = True
@@ -25,7 +20,7 @@ while running:
               col = x // (sudoku.SCREEN_HEIGHT // 9)
 
               # check if number is correct
-              if num == solved_sudoku.board[row][col]:
+              if num == sudoku.solver.board[row][col]:
                 sudoku.board[row][col] = num
               else:
                  mistakes += 1

@@ -1,8 +1,10 @@
+import random
+
 class Solver:
     NUMBERS = [i for i in range(1,10)]
 
-    def __init__(self,gameboard):
-        self.board = gameboard.board
+    def __init__(self):
+        self.board = [[0 for _ in range(9)] for _ in range(9)]
     
     def find_empty_square(self):
         for row in range(9):
@@ -36,6 +38,7 @@ class Solver:
         if (empty_square := self.find_empty_square()) is None:
             return True
         else:
+            random.shuffle(self.NUMBERS)
             for number in self.NUMBERS:
                 if self.is_valid(empty_square[0], empty_square[1], number):
                     self.board[empty_square[0]][empty_square[1]] = number
