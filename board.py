@@ -49,7 +49,7 @@ class Board:
         p.draw.rect(self.screen, "red", p.Rect(new_x*self.SCREEN_WIDTH/9, new_y*self.SCREEN_HEIGHT/9, self.SCREEN_WIDTH/9 + inner_cell_line_width / 2, self.SCREEN_HEIGHT/9))
 
     def generate_board(self):
-        difficulty = 10 # high number == low difficulty
+        difficulty = 1 # low number == low difficulty
 
         while difficulty > 0:
             rand_row = rand.randint(0, 8)
@@ -63,10 +63,3 @@ class Board:
     def copy_board(self):
         list = [row[:] for row in self.solver.board ]
         return list
-
-
-
-    
-    
-
-    

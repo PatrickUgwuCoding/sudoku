@@ -1,4 +1,4 @@
-import board, pygame, dbConnection
+import board, pygame, dbConnection, time
 
 database = dbConnection.MongoDB()
 
@@ -19,6 +19,7 @@ sudoku = board.Board()
 x, y, mistakes = 0, 0, 0
 running = True
 won = False
+starting_time = time.time()
 while running:
     
   sudoku.screen.fill((80, 150, 100))
@@ -61,13 +62,23 @@ while running:
   # update screen
   pygame.display.flip()
 
+  # check if game is won
   if sudoku.board == sudoku.solver.board:
     running = False
     won = True
-    score = 3
-    for top_score in database.get_highscores():
-      if score > top_score["score"]:
-        database.add_highscore(username, score)
+    ending_time = time.time()
+
+    # calculate time
+    score = ending_time - starting_time + 60 * mistakes
+    print(score)
+    
+    # adding new highscores
+    if len(highscores:=database.get_highscores()) < 20:
+      database.add_highscore(username, score)
+    else:
+      for top_score in highscores:
+        if score > top_score["score"]:
+          database.add_highscore(username, score)
 
 
 
@@ -78,7 +89,9 @@ while won:
   for event in pygame.event.get():
       if event.type == pygame.QUIT:
           won = False
-      
+
+  # update screen
+  pygame.display.flip()
 
 database.close()
 pygame.quit()
