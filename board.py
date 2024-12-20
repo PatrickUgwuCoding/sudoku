@@ -48,8 +48,37 @@ class Board:
         new_y = (y // (self.SCREEN_HEIGHT / 9))
         p.draw.rect(self.screen, "red", p.Rect(new_x*self.SCREEN_WIDTH/9, new_y*self.SCREEN_HEIGHT/9, self.SCREEN_WIDTH/9 + inner_cell_line_width / 2, self.SCREEN_HEIGHT/9))
 
+    def draw_win(self, username, score, highscore=False):
+        # Setup text
+        text_size = round(self.SCREEN_HEIGHT / 18)
+        font = p.font.Font(None, text_size)
+
+        # determine the text lines
+        if highscore:
+            lines = [f"{username}", "New Highscore:", f"{score:.2f}"]
+        else:
+            lines = [f"{username}", f"Score:", f"{score:.2f}"]
+
+        # center each line by height
+        total_height = len(lines) * text_size  
+        start_height = self.SCREEN_HEIGHT / 2 - total_height / 2
+
+        # display each line
+        for i, line in enumerate(lines):
+            text_surface = font.render(line, True, (100, 50, 100))
+            width = self.SCREEN_WIDTH / 2 - text_surface.get_size()[0] / 2 # center each line by width
+            height = start_height + i * text_size
+            self.screen.blit(text_surface, (width, height))
+
+        # display text to start a new game
+        restart_text = font.render("(click to restart)", True, (100, 50, 100))
+        width = self.SCREEN_WIDTH/2 - restart_text.get_size()[0] / 2
+        height =  self.SCREEN_HEIGHT/2 + 4 * text_size
+        self.screen.blit(restart_text, (width, height))
+
+    
     def generate_board(self):
-        difficulty = 1 # low number == low difficulty
+        difficulty = 30 # low number == low difficulty
 
         while difficulty > 0:
             rand_row = rand.randint(0, 8)
