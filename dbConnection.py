@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import bcrypt
 
 class MongoDB:
     def __init__(self):
@@ -17,15 +18,16 @@ class MongoDB:
     
     def find_user(self, username, password):
         users_collection = self.db['users']
-        if users_collection.find_one({"name" : username, "password": password}) is not None:
+        user = users_collection.find_one({"name": username})
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             return True
         else: 
             return False
     
     def add_user(self, username, password):
-        # Add a new user
         users_collection = self.db['users']
-        users_collection.insert_one({"name": username, "password": password})
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        users_collection.insert_one({"name": username, "password": hashed_password})
     
     def close(self):
         self.client.close()
