@@ -1,5 +1,7 @@
 # Sudoku Game with MongoDB and User Authentication 
 
+<img src="https://github.com/PatrickUgwuCoding/sudoku/blob/main/sudoku_demo.gif" width="400" alt="Gameplay Demo">
+
 ## Project Overview
 A Pygame-based Sudoku game built as a learning project to explore databases and user authentication. The application combines classic Sudoku gameplay with MongoDB for storing user data and high scores, using bcrypt for secure password handling.
 
